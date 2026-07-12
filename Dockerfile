@@ -1,4 +1,6 @@
-    FROM nginx:alpine
-    COPY index.html /usr/share/nginx/html/index.html
-    EXPOSE 8080
-    CMD ["nginx", "-g", "daemon off;"]
+FROM python:3.9-slim
+WORKDIR /app
+RUN pip install flask
+COPY app.py .
+EXPOSE 5000
+CMD ["python", "app.py"]
