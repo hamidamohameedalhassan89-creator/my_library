@@ -110,6 +110,7 @@ MAIN_TEMPLATE = """
 
 @app.route('/')
 def index():
+    # تم التعديل هنا ليقرأ الواجهة الجديدة الصحيحة مباشرة
     return render_template_string(MAIN_TEMPLATE, books=books_db)
 
 if __name__ == '__main__':
