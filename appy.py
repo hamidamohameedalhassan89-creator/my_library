@@ -3,7 +3,7 @@ import os
 
 # 1. إعدادات الصفحة الأساسية بشكل عصري
 st.set_page_config(
-    page_title="المكتبة الرقمية", 
+    page_title="digital library ", 
     page_icon="📚", 
     layout="wide"
 )
