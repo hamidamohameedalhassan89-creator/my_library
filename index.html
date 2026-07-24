@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبتي الرقمية - الروايات والكتب</title>
+    <style>
+        :root {
+            --primary-color: #6b21a8; /* لون بنكي عميق وأنيق */
+            --primary-dark: #581c87; /* لون بنكي داكن للتحويم */
+            --accent-color: #c084fc; /* درجة بنكية فاتحة ومضيئة */
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .search-box {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-box input {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(107, 33, 168, 0.1);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 180px;
+            background-color: #f1f5f9;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .placeholder-icon {
+            font-size: 3rem;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-view {
+            background-color: #f3e8ff;
+            color: var(--primary-color);
+        }
+
+        .btn-view:hover {
+            background-color: #e9d5ff;
+        }
+
+        .btn-download {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-download:hover {
+            background-color: var(--primary-dark);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>مكتبتي الرقمية</h1>
+        <p>استعرضي وحملي رواياتك وكتبك المفضلة بسهولة</p>
+    </header>
+
+    <div class="container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ابحثي عن كتاب أو رواية..." onkeyup="filterBooks()">
+        </div>
+
+        <div class="grid" id="booksGrid">
+            
+            <!-- Book 1: ameer -->
+            <div class="card" data-title="ameer أمير">
+                <div class="card-img-container">
+                    <img src="ameer.png" alt="ameer" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'placeholder-icon\'>📖</div>';">
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="card-title">أمير (Ameer)</div>
+                        <div class="card-desc">استعرضي أو حملي هذا الكتاب بصيغة PDF.</div>
+                    </div>
+                    <div class="btn-group">
+                        <a href="ameer.pdf" target="_blank" class="btn btn-view">قراءة</a>
+                        <a href="ameer.pdf" download class="btn btn-download">تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 2: ardzekola -->
+            <div class="card" data-title="اردزيكولا ardzekola أرض زيكولا">
+                <div class="card-img-container">
+                    <img src="ardzekola.png" alt="ardzekola" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'placeholder-icon\'>📚</div>';">
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="card-title">أرض زيكولا (Ardzekola)</div>
+                        <div class="card-desc">استعرضي أو حملي هذه الرواية بصيغة PDF.</div>
+                    </div>
+                    <div class="btn-group">
+                        <a href="ardzekola.pdf" target="_blank" class="btn btn-view">قراءة</a>
+                        <a href="ardzekola.pdf" download class="btn btn-download">تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 3: facer -->
+            <div class="card" data-title="فاسر facer">
+                <div class="card-img-container">
+                    <img src="facer.png" alt="facer" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'placeholder-icon\'>🔖</div>';">
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="card-title">Facer</div>
+                        <div class="card-desc">استعرضي أو حملي هذا الكتاب بصيغة PDF.</div>
+                    </div>
+                    <div class="btn-group">
+                        <a href="facer.pdf" target="_blank" class="btn btn-view">قراءة</a>
+                        <a href="facer.pdf" download class="btn btn-download">تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 4: mamlaka -->
+            <div class="card" data-title="مملكة mamlaka">
+                <div class="card-img-container">
+                    <img src="mamlaka.png" alt="mamlaka" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'placeholder-icon\'>👑</div>';">
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="card-title">المملكة (Mamlaka)</div>
+                        <div class="card-desc">استعرضي أو حملي هذه الرواية بصيغة PDF.</div>
+                    </div>
+                    <div class="btn-group">
+                        <a href="mamlaka.pdf" target="_blank" class="btn btn-view">قراءة</a>
+                        <a href="mamlaka.pdf" download class="btn btn-download">تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 5: wady -->
+            <div class="card" data-title="وادي wady">
+                <div class="card-img-container">
+                    <img src="wady.png" alt="wady" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'placeholder-icon\'>🌊</div>';">
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="card-title">الوادي (Wady)</div>
+                        <div class="card-desc">استعرضي أو حملي هذه الرواية بصيغة PDF.</div>
+                    </div>
+                    <div class="btn-group">
+                        <a href="wady.pdf" target="_blank" class="btn btn-view">قراءة</a>
+                        <a href="wady.pdf" download class="btn btn-download">تحميل</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 - مكتبتي الرقمية</p>
+    </footer>
+
+    <script>
+        function filterBooks() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
+
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getAttribute('data-title').toLowerCase();
+                if (title.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
